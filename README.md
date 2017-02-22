@@ -70,14 +70,70 @@ Using smaller values of than `orient=9` caused more false positives. Using value
 |:--------:|:------------:|:------------:|:------------:|:------------:|:------------:|
 | RGB | 9 | 8 | 2 | 0/1/2 | Bad |
 | HLS | 9 | 8 | 2 | 1 | Bad |
-| YUV | 9 | 8 | 2 | 0 | Best |
+| YUV | 9 | 8 | 2 | 0 | Pretty good |
 | YUV | 8 | 8 | 2 | 0 | Good(but caused false positives) |
 | YUV | 7 | 8 | 2 | 0 | Good(but caused false positives) |
 | YUV | 9 | 8 | 2 | ALL | Out of Memory |
 
 ####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
-I trained a linear SVM using...
+The code for this step is contained in the 6th code cell of the IPython notebook located in "./project_main.ipynb "     
+
+1. I get the feature vector of `car `and `not_car` using `extract_features()`.
+2. Then, I concatenate the feature vector of `car `and `not car`.
+3. Using sklearn.preprocessing.StandardScaler(), I normalize the feature vector.
+4. Next, I concatenate the label 1 of of the car training set and the label 0 of the notcars trainig set.
+5. I split up the data into randomized 80% training and 20% test sets using `sklearn.model_selection.train_test_split()`. This automatically shuffles the dataset.
+6. Using `sklearn.svm.LinearSVC()`, I fit the training features and labels to the model.
+7. Print out the accuracy.
+
+~~~~
+color_space = 'YUV' # Can be RGB, HSV, LUV, HLS, YUV, YCrCb
+orient = 9  # HOG orientations
+pix_per_cell = 8 # HOG pixels per cell
+cell_per_block = 2 # HOG cells per block
+hog_channel = 0 # Can be 0, 1, 2, or "ALL"
+spatial_size = (32, 32) # Spatial binning dimensions
+hist_bins = 32    # Number of histogram bins
+spatial_feat = True # Spatial features on or off
+hist_feat = True # Histogram features on or off
+hog_feat = True # HOG features on or off
+
+car_features = extract_features(cars, color_space=color_space, 
+                        spatial_size=spatial_size, hist_bins=hist_bins, 
+                        orient=orient, pix_per_cell=pix_per_cell, 
+                        cell_per_block=cell_per_block, 
+                        hog_channel=hog_channel, spatial_feat=spatial_feat, 
+                        hist_feat=hist_feat, hog_feat=hog_feat)
+notcar_features = extract_features(notcars, color_space=color_space, 
+                        spatial_size=spatial_size, hist_bins=hist_bins, 
+                        orient=orient, pix_per_cell=pix_per_cell, 
+                        cell_per_block=cell_per_block, 
+                        hog_channel=hog_channel, spatial_feat=spatial_feat, 
+                        hist_feat=hist_feat, hog_feat=hog_feat)
+
+X = np.vstack((car_features, notcar_features)).astype(np.float64)                        
+
+# Fit a per-column scaler
+X_scaler = StandardScaler().fit(X)
+# Apply the scaler to X
+scaled_X = X_scaler.transform(X)
+
+# Define the labels vector
+y = np.hstack((np.ones(len(car_features)), np.zeros(len(notcar_features))))
+
+# Split up data into randomized training and test sets
+rand_state = np.random.randint(0, 100)
+X_train, X_test, y_train, y_test = train_test_split(
+    scaled_X, y, test_size=0.2, random_state=rand_state)
+
+# Use a linear SVC 
+svc = LinearSVC()
+# Check the training time for the SVC
+svc.fit(X_train, y_train)
+# Check the score of the SVC
+print('Test Accuracy of SVC = ', round(svc.score(X_test, y_test), 4))
+~~~~
 
 ###Sliding Window Search
 
