@@ -148,7 +148,7 @@ The code for this step is contained in the 8th code cell of the IPython notebook
 
 I divided the window into 4 zones, and set each size 64, 96, 128, 192 and set overlap 75%.  
 Because it is necessary to change the size of the object to be recognized based on the perspective.  
-The Overlap value is very important. If the overlap value is high(ex.90), processing time will be required.  
+The Overlap value is very important. If the overlap value is high(ex.90%), processing time will be required.  
 But if the overlap value is low(ex.50%), it can not be detected. Then, I settled 75 %.
 
 ~~~~
@@ -203,7 +203,7 @@ The code for this step is contained in the 9th code cell of the IPython notebook
 I used heatmap functions `add_heat(), apply_threshold(), draw_labeled_bboxes()` and `scipy.ndimage.measurements.label()` introduced by the udacity lesson.
 I wrote `class BoundingBoxes` to get previous boxes. `class BoundingBoxes` has FIFO queue that stores the bounding boxes of the last `n` frames.
 
-False positives occur on the side of the road or some bush and shadow place.
+False positives occured on the side of the road or some bush and shadow place.
 The box nums of the last `n` frames and the threshold value of the heatmaps and are important to reduce false positives.
  As a result of trial and error, good results were obtained when `n = 30` and `threshold = 60`.
 
@@ -292,5 +292,7 @@ Here are some example images:
 
 ####1. Briefly discuss any problems / issues you faced in your implementation of this project.  Where will your pipeline likely fail?  What could you do to make it more robust?
 
-Here I'll talk about the approach I took, what techniques I used, what worked and why, where the pipeline might fail and how I might improve it if I were going to pursue this project further.  
+Detection using HOG feature worked out from the beginning. However, it was very hard for me to lose false positives.
+As mentioned above, although HOG perameter was changed variously, even if the detection accuracy increased, false detection could not be eliminated. False positives occured on the side of the road or some bush and shadow place. Eventually it worked well with adjusting heatmap and boxes of the last frames.  
 
+To make it more robust, I would like to use "Deep Learning" for learning. If you learn HOG image itself it will be able to detect better accuracy. And I think that improvement of performance can be expected if we can parallelize window slide.
