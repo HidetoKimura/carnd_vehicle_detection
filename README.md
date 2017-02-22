@@ -1,9 +1,4 @@
-##Writeup Template
-###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
----
-
-**Vehicle Detection Project**
+# Vehicle Detection Project
 
 The goals / steps of this project are the following:
 
@@ -15,14 +10,11 @@ The goals / steps of this project are the following:
 * Estimate a bounding box for vehicles detected.
 
 [//]: # (Image References)
-[image1]: ./examples/car_not_car.png
-[image2]: ./examples/HOG_example.jpg
-[image3]: ./examples/sliding_windows.jpg
-[image4]: ./examples/sliding_window.jpg
-[image5]: ./examples/bboxes_and_heat.png
-[image6]: ./examples/labels_map.png
-[image7]: ./examples/output_bboxes.png
-[video1]: ./project_video.mp4
+[car_nocar]: ./files/car_nocar.png
+[car_nocar_hog]: ./files/car_nocar_hog.png
+[slide_win1]: ./files/slide_win1.png
+[slide_win2]: ./files/slide_win2.png
+[heatmap]: ./files/heatmap.png
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
 ###Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -32,24 +24,34 @@ The goals / steps of this project are the following:
 
 ####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Vehicle-Detection/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
 
-You're reading it!
+You're reading it(README)!
+I used [this jupyter notebook](https://github.com/HidetoKimura/carnd_vehicle_detection/blob/master/project_main.ipynb) in this project. Because in this project to do data analysis and visualization is very important.
+Here is the file structures.
+
+### File Structures
+
+project_main.ipynb - The jupyter notebook of the project.    
+README.md - This file containing details of the project.  
+/output_images/processed_project_video.mp4 - The result video.  
+/files/ - Folder for README.md.  
+/vehicles/ - Folder for the vehicle training data. NOTE: There is not on Github. This project uses the udacity data. You can download [here](https://s3.amazonaws.com/udacity-sdc/Vehicle_Tracking/vehicles.zip).
+/non-vehicles/ - - Folder for the non-vehicle training data. NOTE: There is not on Github. This project uses the udacity data. You can download [here](https://s3.amazonaws.com/udacity-sdc/Vehicle_Tracking/non-vehicles.zip).
 
 ###Histogram of Oriented Gradients (HOG)
 
 ####1. Explain how (and identify where in your code) you extracted HOG features from the training images.
 
-The code for this step is contained in the first code cell of the IPython notebook (or in lines # through # of the file called `some_file.py`).  
+The code for this step is contained in the 2nd/4th code cell of the IPython notebook located in "./project_main.ipynb " 
+
+I used the training data given by Udacity, which come from a combination of the GTI vehicle image database, the KITTI vision benchmark suite, and examples extracted from the project video itself. All images are 64x64 pixels. A third data set released by Udacity was not used here. There are 8792 images of vehicles and 8968 images of non-vehicles.
 
 I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an example of one of each of the `vehicle` and `non-vehicle` classes:
 
-![alt text][image1]
+![alt text][car_nocar]
 
-I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
+Here is an example using the `YUV` color space and HOG parameters of `orientations=9`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
 
-Here is an example using the `YCrCb` color space and HOG parameters of `orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
-
-
-![alt text][image2]
+![alt text][car_nocar_hog]
 
 ####2. Explain how you settled on your final choice of HOG parameters.
 
