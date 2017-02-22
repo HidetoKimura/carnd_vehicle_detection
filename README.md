@@ -57,12 +57,20 @@ Here is an example using the `YUV` color space and HOG parameters of `orientatio
 
 ####2. Explain how you settled on your final choice of HOG parameters.
 
+First, I used the RGB color space. But it could not detect vehicles at all.   
+Next, I used HLS color space and L(Lighting) channel. But it was not good, too.
+The YUV model defines a color space in terms of one luma (Y) and two chrominance (UV) components.
+The Y channel corresponds to the gray scale and it seems like the best for detecting shape.
+I got the good result using YUV and Y(luma) channel. 
+
+Below was why I chose the HOG parameters - `YUV, Y channel, orient=9, pix_per_cell=8, cells_per_block=2`.
+Using smaller values of than `orient=9` caused more false positives. Using values larger than `orient=9, pix_per_cell=8, cells_per_block=2` increased the feature vector and did not improve results. And using 'ALL channel' caused out of memory. 
 
 |  colorspace | orient | pix_per_cell | cell_per_block | hog_channel  | result|
 |:--------:|:------------:|:------------:|:------------:|:------------:|:------------:|
-| RGB | 9 | 8 | 2 | 0 | Bad |
+| RGB | 9 | 8 | 2 | 0/1/2 | Bad |
 | HLS | 9 | 8 | 2 | 1 | Bad |
-| YUV | 9 | 8 | 2 | 0 | Good |
+| YUV | 9 | 8 | 2 | 0 | Best |
 | YUV | 8 | 8 | 2 | 0 | Good |
 | YUV | 7 | 8 | 2 | 0 | Good |
 | YUV | 9 | 8 | 2 | ALL | Out of Memory |
