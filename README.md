@@ -198,7 +198,7 @@ Here's a [link to my video result](./output_images/processed_project_video.mp4)
 
 ####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
 
-The code for this step is contained in the 9th code cell of the IPython notebook located in "./project_main.ipynb "     
+The code for this step is contained in the 9th/10th/11th code cell of the IPython notebook located in "./project_main.ipynb "     
 
 I used heatmap functions `add_heat(), apply_threshold(), draw_labeled_bboxes()` and `scipy.ndimage.measurements.label()` introduced by the udacity lesson.
 I wrote `class BoundingBoxes` to get previous boxes. `class BoundingBoxes` has FIFO queue that stores the bounding boxes of the last `n` frames.
