@@ -85,7 +85,7 @@ The code for this step is contained in the 6th code cell of the IPython notebook
 4. Next, I concatenate the label 1 of of the car training set and the label 0 of the notcars trainig set.
 5. I split up the data into randomized 80% training and 20% test sets using `sklearn.model_selection.train_test_split()`. This automatically shuffles the dataset.
 6. Using `sklearn.svm.LinearSVC()`, I fit the training features and labels to the model.
-7. Print out the accuracy.
+7. Finally, I print out the accuracy.
 
 ~~~~
 color_space = 'YUV' # Can be RGB, HSV, LUV, HLS, YUV, YCrCb
@@ -141,19 +141,19 @@ print('Test Accuracy of SVC = ', round(svc.score(X_test, y_test), 4))
 
 I decided to search random window positions at random scales all over the image and came up with this (ok just kidding I didn't actually ;):
 
-![alt text][image3]
+![alt text][slide_win1]
 
 ####2. Show some examples of test images to demonstrate how your pipeline is working.  What did you do to optimize the performance of your classifier?
 
 Ultimately I searched on two scales using YCrCb 3-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
-![alt text][image4]
+![alt text][slide_win2]
 ---
 
 ### Video Implementation
 
 ####1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (somewhat wobbly or unstable bounding boxes are ok as long as you are identifying the vehicles most of the time with minimal false positives.)
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](./output_images/processed_project_video.mp4)
 
 
 ####2. Describe how (and identify where in your code) you implemented some kind of filter for false positives and some method for combining overlapping bounding boxes.
