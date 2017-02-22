@@ -25,7 +25,7 @@ The goals / steps of this project are the following:
 
 ####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one.  You can submit your writeup as markdown or pdf.  [Here](https://github.com/udacity/CarND-Vehicle-Detection/blob/master/writeup_template.md) is a template writeup for this project you can use as a guide and a starting point.  
 
-You're reading it(README)!
+You're reading it(README)!  
 I used [this jupyter notebook](https://github.com/HidetoKimura/carnd_vehicle_detection/blob/master/project_main.ipynb) in this project. Because in this project to do data analysis and visualization is very important.
 Here is the file structures.
 
@@ -57,7 +57,15 @@ Here is an example using the `YUV` color space and HOG parameters of `orientatio
 
 ####2. Explain how you settled on your final choice of HOG parameters.
 
-I tried various combinations of parameters and...
+
+|  colorspace | orient | pix_per_cell | cell_per_block | hog_channel  | result|
+|:--------:|:------------:|:------------:|:------------:|:------------:|:------------:|
+| RGB | 9 | 8 | 2 | 0 | Bad |
+| HLS | 9 | 8 | 2 | 1 | Bad |
+| YUV | 9 | 8 | 2 | 0 | Good |
+| YUV | 8 | 8 | 2 | 0 | Good |
+| YUV | 7 | 8 | 2 | 0 | Good |
+| YUV | 9 | 8 | 2 | ALL | Out of Memory |
 
 ####3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
